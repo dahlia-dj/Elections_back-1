@@ -14,7 +14,7 @@ class Region extends Model
     use HasFactory;
     protected $table ="regions"; //
     public $timestamps = false ; // annule les commandes create et update dans la table region
-    protected $fillable = ["label"];
+    protected $fillable = ['label']; // permet de passer directement les valeurs lors de la creation d'un objet dans le modele
 
     //public function participants(){}
 }

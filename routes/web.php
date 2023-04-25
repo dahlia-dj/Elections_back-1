@@ -18,14 +18,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
-Route::get('/region_insert', function () {
-    return view('formulaire_region');
-});
-
-Route::post('/region_insert', function () {
-    return "Nouvelle region engistree:" .request('region');
-});
-
+Route ::get("/form_update_region/{id}",[RegionController::class,"edit"]);
+Route ::get("/region_delete/{id}",[RegionController::class,"destroy"]);
 Route ::get("/region_create",[RegionController::class,"index"]);
+Route ::get("/region_liste",[RegionController::class,"create"]);
 Route ::post("/region_insert",[RegionController::class,"store"]);
+Route ::post("/region_update",[RegionController::class,"update"]);
+
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

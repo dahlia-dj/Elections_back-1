@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use \app\Models\Region;
+use Illuminate\Support\Facade\DB;
+use \App\Models\Region;
 
 class RegionController extends Controller
 {
@@ -21,7 +22,8 @@ class RegionController extends Controller
      */
     public function create()
     {
-        //
+        $liste = Region::all();
+        return view("liste_region",compact('liste'));
     }
 
     /**
@@ -32,8 +34,8 @@ class RegionController extends Controller
         try{
             \DB::beginTransaction();
             Region::create(["label"=>$request->Region]);
-            \DB::commit();
-           
+            \DB::commit(); 
+            return view("formulaire_region");
         } catch(\Thowable $th){
             return back();
         }
@@ -53,7 +55,15 @@ class RegionController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        try {
+            \DB::beginTransaction();
+            $reg = Region::find($id);
+            \DB::commit(); 
+            return view("update_region", compact("reg"));
+ 
+        } catch (\Throwable $th) {
+            return back();
+        }
     }
 
     /**
@@ -61,7 +71,15 @@ class RegionController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        try {
+            \DB::beginTransaction();
+            Region::find($request->id)->update(['label'=>$request->label]);
+            \DB::commit(); 
+        return redirect("/region_liste");
+
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
     }
 
     /**
@@ -69,6 +87,14 @@ class RegionController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+     try {
+        \DB::beginTransaction();
+        Region::find($id)->delete();
+        \DB::commit(); 
+        return redirect("/region_liste");
+     } catch (\Throwable $th) {
+        dd($th);
+        return back();
+     }   
     }
 }
