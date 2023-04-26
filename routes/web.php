@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\RegionController;
+use \App\Http\Controllers\ParticipantController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,16 @@ Route ::get("/region_liste",[RegionController::class,"create"]);
 Route ::post("/region_insert",[RegionController::class,"store"]);
 Route ::post("/region_update",[RegionController::class,"update"]);
 
+Route ::get("/participant_create",[ParticipantController::class,"index"]);
+Route ::get("/participant_liste",[ParticipantController::class,"create"]);
+Route ::post("/participant_insert",[ParticipantController::class,"store"]);
+Route ::get("/form_update_participant/{id}",[ParticipantController::class,"edit"]);
+Route ::post("/Participant_update",[ParticipantController::class,"update"]);
+Route ::get("/participant_delete/{id}",[ParticipantController::class,"destroy"]);
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Auth::routes();
 

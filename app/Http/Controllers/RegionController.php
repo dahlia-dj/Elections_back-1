@@ -33,7 +33,7 @@ class RegionController extends Controller
     {
         try{
             \DB::beginTransaction();
-            Region::create(["label"=>$request->Region]);
+            Region::create(['label'=>$request->Region]);
             \DB::commit(); 
             return view("formulaire_region");
         } catch(\Thowable $th){
