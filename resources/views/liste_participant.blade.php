@@ -44,8 +44,8 @@
             <td>{{$p->etat}}</td>
             <td>{{$p->tel}}</td>
             <td>
-                <a href="/participant_delete/{{$participant->id}}" class="btn btn-danger">Supprimer</a>
-                <a href="/form_update_participant/{{$participant->id}}" class="btn btn-info">Editer</a>
+                <a href="/participant_delete/{{$p->id}}" class="btn btn-danger">Supprimer</a>
+                <a href="/form_update_participant/{{$p->id}}" class="btn btn-warning">Editer</a>
             </td>
         </tr>    
         @endforeach

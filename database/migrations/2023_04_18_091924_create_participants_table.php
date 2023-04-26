@@ -22,9 +22,9 @@ return new class extends Migration
             $table->foreign('id_region')->references('id')->on('regions')->onDelete('cascade');
             $table->string('login',30);
             $table->string('pwd',100);
-            $table->string('email',30)->nullable();
-            $table->string('etat',1)->default('0'); 
-            $table->string('tel',15)->nullable();
+            $table->string('email',300)->nullable();
+            $table->boolean('etat')->default('1'); 
+            $table->string('tel',20)->nullable();
         });
     }
 

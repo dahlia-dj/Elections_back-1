@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $login
  * @property int $pwd
  * @property string $email 
- *  @property int $etat
+ * @property int $etat
  * @property string $tel 
  
  */

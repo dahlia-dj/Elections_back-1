@@ -30,13 +30,17 @@ Route ::get("/participant_create",[ParticipantController::class,"index"]);
 Route ::get("/participant_liste",[ParticipantController::class,"create"]);
 Route ::post("/participant_insert",[ParticipantController::class,"store"]);
 Route ::get("/form_update_participant/{id}",[ParticipantController::class,"edit"]);
-Route ::post("/Participant_update",[ParticipantController::class,"update"]);
+Route ::post("/participant_update",[ParticipantController::class,"update"]);
 Route ::get("/participant_delete/{id}",[ParticipantController::class,"destroy"]);
 
-Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Auth::routes();
+//Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+//Auth::routes();
+
+//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+

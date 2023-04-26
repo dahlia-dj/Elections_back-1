@@ -30,19 +30,19 @@ class ParticipantController extends Controller
      */
     public function store(Request $request)
     {
-       // $request = validate([
-          //  'nom'=>'required',
-            //'num_cni'=>'required',
-            //'age'=>'required',
-            //'sexe'=>'required',
-            //'statut'=>'required',
-            //'id_region'=>'required',
-            //'login'=>'required',
-            //'pwd'=>'required',
-            //'email'=>'required',
-            //'etat'=>'required',
-            //'tel'=>'required',
-        //]);
+    //    $request ->validate([
+    //     'nom'=>'required',
+    //     'num_cni'=>'required',
+    //     'age'=>'required',
+    //     'sexe'=>'required',
+    //     'statut'=>'required',
+    //     'id_region'=>'required',
+    //     'login'=>'required',
+    //     'pwd'=>'required',
+    //     'email'=>'required',
+    //     'etat'=>'required',
+    //     'tel'=>'required',
+    //     ]);
         try{
             \DB::beginTransaction();
 
@@ -50,20 +50,21 @@ class ParticipantController extends Controller
             $participant->nom=$request->nom;
             $participant->num_cni=$request->cni;
             $participant->age=$request->age;
-            $participant->sexe=$request->radiobouton;
-            $participant->statut=$request->radiobouton2;
+            $request->radiobouton=="on"? $participant->sexe="F" : $participant->sexe="M";
+            $request->radiobouton2== "on"? $participant->statut= "E": $participant->statut= "C" ;
             $participant->id_region=$request->id_region;
             $participant->login=$request->login;
             $participant->pwd=$request->password;
             $participant->email=$request->email;
-            $participant->etat=$request->radiobouton3;
+            $request->radiobouton3== "on"? $participant->etat=1 :$participant->etat=0;
             $participant->tel=$request->phone;
 
             $participant->save();
             \DB::commit(); 
             return redirect("formulaire_participant")->with('success','Le formulaire a ete soumis avec succes!');
         } catch(\Thowable $th){
-            return back()->with('erreur','Le formulaire n\'a pas ete enregistre');
+            dd($th);
+            return back();
         }
         
     }
@@ -81,7 +82,15 @@ class ParticipantController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        try {
+            \DB::beginTransaction();
+            $participant = Participant::find($id);
+            \DB::commit(); 
+            return view("update_participant", compact("participant"));
+ 
+        } catch (\Throwable $th) {
+            return back();
+        }
     }
 
     /**
@@ -89,7 +98,42 @@ class ParticipantController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        try {
+            \DB::beginTransaction();
+
+            // $request ->validate([
+            //     'nom'=>'required',
+            //     'num_cni'=>'required',
+            //     'age'=>'required',
+            //     'sexe'=>'required',
+            //     'statut'=>'required',
+            //     'id_region'=>'required',
+            //     'login'=>'required',
+            //     'pwd'=>'required',
+            //     'email'=>'required',
+            //     'etat'=>'required',
+            //     'tel'=>'required',
+            //     ]);  
+
+            $participant = Participant::find($request->id);
+            $participant->nom=$request->nom;
+            $participant->num_cni=$request->cni;
+            $participant->age=$request->age;
+            $participant->sexe=$request->radiobouton;
+            $participant->statut=$request->radiobouton2;
+            $participant->id_region=$request->id_region;
+            $participant->login=$request->login;
+            $participant->pwd=$request->password;
+            $participant->email=$request->email;
+            $participant->etat=$request->radiobouton3;
+            $participant->tel=$request->tel;
+            $participant->update();
+            \DB::commit(); 
+        return redirect("/participant_liste")->with('success','Le formulaire a ete modifie avec succes!');;
+
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
     }
 
     /**
@@ -97,6 +141,14 @@ class ParticipantController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            \DB::beginTransaction();
+            Participant::find($id)->delete();
+            \DB::commit(); 
+            return redirect("/participant_liste")->with('success','Le formulaire a ete supprimme avec succes!');;
+         } catch (\Throwable $th) {
+            dd($th);
+            return back();
     }
+}
 }
