@@ -12,7 +12,7 @@
         <h1>Liste des participants</h1>
     </div>
     <br>
-        <table class="table">
+        <table class="table table-striped">
             <tr>
                 <th>Id</th>
                 <th>Nom</th>
