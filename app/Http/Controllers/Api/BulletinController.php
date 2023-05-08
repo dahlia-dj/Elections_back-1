@@ -18,6 +18,8 @@ class BulletinController extends Controller
             'status' => true,
             'bulletin' => $bulletin
         ]);
+        // $bulletin = Bulletin::all();
+        // return response()->json($bulletin, 200);
     }
 
     /**
@@ -33,13 +35,21 @@ class BulletinController extends Controller
      */
     public function store(Request $request)
     {
-        $bulletin = Bulletin::create($request->all());
-
-        return response()->json([
-            'status' => true,
-            'message' => "Bulletin Created successfully!",
-            'bulletin' => $bulletin
-        ], 200);
+        $this->validate($request, [
+            'couleur' => 'required|max:100',
+            'photo' => 'required|max:100',
+        ]);
+        try {
+            DB::beginTransaction();
+            $bulletin = Bulletin::create([
+                'couleur' => $request->couleur,
+                'photo' => $request->photo,
+            ]);
+            DB::commit();
+            return response()->json($bulletin, 201);
+        } catch (\Throwable $th) {
+            return response()->json("{'error: Imposible de sauvegarder une bulletin'}", 404);
+        }
     }
 
     /**
@@ -61,15 +71,16 @@ class BulletinController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Bulletin $bulletin)
+    public function update(Request $request, $id)
     {
-        $bulletin->update($request->all());
-
-        return response()->json([
-            'status' => true,
-            'message' => "Bulletin Updated successfully!",
-            'bulletin' => $bulletin
-        ], 200); 
+        try {
+            $bulletin = Bulletin::find($id);
+            $bulletin->update($request->all());
+            response()->json("{'Modification réussie du bulletin'}", 200);
+            return $bulletin;
+        } catch (Throwable $error) {
+            return response()->json("{'error: Imposible de mettre a jour le bulletin'}", 404);
+        }
     }
 
     /**
@@ -77,11 +88,12 @@ class BulletinController extends Controller
      */
     public function destroy(Bulletin $bulletin)
     {
-        $bulletin->delete();
-
-        return response()->json([
-            'status' => true,
-            'message' => "Bulletin Deleted successfully!",
-        ], 200);
+        try {
+            $bulletin = Bulletin::find($id);
+            $bulletin->delete();
+            return response()->json("{'Suppresion réussie du bulletin'}", 200);
+        } catch (Throwable $error) {
+            return response()->json("{'error: Imposible de supprimé le bulletin'}", 404);
+        }
     }
 }

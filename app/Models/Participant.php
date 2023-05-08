@@ -41,6 +41,14 @@ class Participant extends Model
     'tel',
   ];
    
+  protected $casts = [
+    'id_region' => 'int',
+  
+ ];
+ public function region()
+	 {
+	 	return $this->belongsTo(Participant::class, 'id_region');
+	 }
  
    
 // permet de passer directement les valeurs lors de la creation d'un objet dans le modele

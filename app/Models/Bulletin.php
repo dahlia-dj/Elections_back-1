@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Bulletin extends Model
 {
     use HasFactory;
+    public $timestamps = false;
+    protected $table = 'bulletins';
+
+	 protected $fillable = [
+		'couleur',
+        'photo',
+        
+	 ];
 }

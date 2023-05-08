@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('elections', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
             $table->string('description',1000);
             $table->string('label');
             $table->string('statut');
@@ -20,7 +20,6 @@ return new class extends Migration
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      */

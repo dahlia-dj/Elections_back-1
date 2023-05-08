@@ -17,7 +17,7 @@ class VoteFactory extends Factory
     public function definition(): array
     {
         return [
-            "date" => Carbon::createFromFormat('Y-m-d', $this->faker->date('Y-m-d', '2000-01-01')),
+            'date' => $this->faker->date($format = 'Y-m-d'),
         ];
     }
 }

@@ -6,7 +6,7 @@ use \App\Http\Controllers\ParticipantController;
 
 /*
 |--------------------------------------------------------------------------
-| Web Routes
+| Web Routesreturnreturn
 |--------------------------------------------------------------------------
 |
 | Here is where you can register web routes for your application. These
@@ -42,5 +42,4 @@ Route ::get("/participant_delete/{id}",[ParticipantController::class,"destroy"])
 //Auth::routes();
 
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
 

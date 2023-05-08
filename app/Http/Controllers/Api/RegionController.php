@@ -58,9 +58,16 @@ class RegionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Region $region)
+    public function update(Request $request, int $id)
     {
-        //
+        try {
+            $region = Region::find($id);
+            $region->update($request->all());
+            return response()->json("{'Modification réussie de la région'}", 200);
+             
+        } catch (Throwable $error) {
+            return response()->json("{'error: Imposible de mettre a jour la région'}", 404);
+        }
     }
 
     /**

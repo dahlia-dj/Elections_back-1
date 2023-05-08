@@ -14,7 +14,12 @@ return new class extends Migration
         Schema::create('votes', function (Blueprint $table) {
             $table->increments('id');
             $table->date('date');
-            $table->timestamps();
+            $table->unsignedInteger('id_election');
+            $table->unsignedInteger('id_bulletin');
+            $table->unsignedInteger('id_participant');
+            $table->foreign(('id_election'))->references('id')->on('elections')->onDelete('cascade');
+            $table->foreign(('id_bulletin'))->references('id')->on('bulletins')->onDelete('cascade');
+            $table->foreign(('id_participant'))->references('id')->on('participants')->onDelete('cascade');
         });
     }
 

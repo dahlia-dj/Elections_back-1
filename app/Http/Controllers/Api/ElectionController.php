@@ -34,13 +34,27 @@ class ElectionController extends Controller
      */
     public function store(Request $request)
     {
-        $election = Election::create($request->all());
+        $this->validate($request, [
+            'date' => 'required',
+            'statut' => 'required',
+            'label' => 'required|max:20',
+            'description' => 'required|max:300',
+        ]);
 
-        return response()->json([
-            'status' => true,
-            'message' => "Election Created successfully!",
-            'election' => $election
-        ], 200);
+        try {
+            DB::beginTransaction();
+            $election = Election::create([
+                'date' => $request->date,
+                'statut' => $request->statut,
+                'label' => $request->label,
+                'description' => $request->description,
+
+            ]);
+            DB::commit();
+            return response()->json($election, 201);
+        } catch (\Throwable $th) {
+            return response()->json("{'error: Imposible de sauvegarder une élection'}", 404);
+        }
     }
 
     /**
@@ -62,27 +76,36 @@ class ElectionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Election $election)
+    public function update(Request $request,$id)
     {
-        $election->update($request->all());
+        $this->validate($request, [
+            'date' => 'required',
+            'statut' => 'required',
+            'label' => 'required|max:20',
+            'description' => 'required|max:300',
+        ]);
 
-        return response()->json([
-            'status' => true,
-            'message' => "Election Updated successfully!",
-            'election' => $election
-        ], 200); 
+        try {
+            $election = Election::find($id);
+            $election->update($request->all());
+            return response()->json("{'Modification réussie de l'élection'}", 200);
+        } catch (Throwable $error) {
+            return response()->json("{'error: Imposible de mettre a jour l'élection'}", 404);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Election $election)
+    public function destroy(int $id)
     {
-        $election->delete();
 
-        return response()->json([
-            'status' => true,
-            'message' => "Election Deleted successfully!",
-        ], 200);
-    }
+        try {
+            $election = Election::find($id);
+            $election->delete();
+            return response()->json("{'Suppresion réussie de l'élection'}", 200);
+        } catch (Throwable $error) {
+            return response()->json("{'error: Imposible de supprimé l'élection'}", 404);
+        }
+    }   
 }

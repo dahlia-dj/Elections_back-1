@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Carbon\Carbon;
 use Illuminate\support\str;
 
 /**
@@ -19,10 +18,10 @@ class ElectionFactory extends Factory
     public function definition(): array
     {
         return [
-            "description"=>Str::random(300),
-            "label" =>Str::random(15),
+            'date' => $this->faker->date($format = 'Y-m-d'),
+            'label' => rand(21, 80),
+            'description' => $this->faker->realText($maxNbChars = 200, $indexSize = 2),
             "statut"=>Str::random(10),
-            "date" => Carbon::createFromFormat('Y-m-d', $this->faker->date('Y-m-d', '2000-01-01')),
         ];
     }
 }
