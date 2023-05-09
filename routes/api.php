@@ -29,4 +29,4 @@ Route::apiResource('participant', ParticipantController::class);
 Route::get("/onoff/{id}",[ParticipantController::class,"onoff"]);
 Route::apiResource('region', RegionController::class);
 Route::apiResource('vote', VoteController::class);
-Route::get("/resultat/{id}",[ParticipantController::class,"resultat"]);
+Route::get("/resultat/{id}",[VoteController::class,"resultat"]);
