@@ -30,19 +30,19 @@ class ParticipantController extends Controller
      */
     public function store(Request $request)
     {
-    //    $request ->validate([
-    //     'nom'=>'required',
-    //     'num_cni'=>'required',
-    //     'age'=>'required',
-    //     'sexe'=>'required',
-    //     'statut'=>'required',
-    //     'id_region'=>'required',
-    //     'login'=>'required',
-    //     'pwd'=>'required',
-    //     'email'=>'required',
-    //     'etat'=>'required',
-    //     'tel'=>'required',
-    //     ]);
+       $request ->validate([
+        'nom'=>'required',
+        'num_cni'=>'required',
+        'age'=>'required',
+        'sexe'=>'required',
+        'statut'=>'required',
+        'id_region'=>'required',
+        'login'=>'required',
+        'pwd'=>'required',
+        'email'=>'required',
+        'etat'=>'required',
+        'tel'=>'required',
+        ]);
         try{
             \DB::beginTransaction();
 
@@ -96,7 +96,7 @@ class ParticipantController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $id='')
     {
         try {
             \DB::beginTransaction();
@@ -115,21 +115,21 @@ class ParticipantController extends Controller
             //     'tel'=>'required',
             //     ]);  
 
-            $participant = Participant::find($request->id);
+            $participant = Participant::find(id);
             $participant->nom=$request->nom;
             $participant->num_cni=$request->cni;
             $participant->age=$request->age;
-            $participant->sexe=$request->radiobouton;
-            $participant->statut=$request->radiobouton2;
+            $request->radiobouton=="on"? $participant->sexe="F" : $participant->sexe="M";
+            $request->radiobouton2== "on"? $participant->statut= "E": $participant->statut= "C" ;
             $participant->id_region=$request->id_region;
             $participant->login=$request->login;
             $participant->pwd=$request->password;
             $participant->email=$request->email;
-            $participant->etat=$request->radiobouton3;
-            $participant->tel=$request->tel;
-            $participant->update();
+            $request->radiobouton3== "on"? $participant->etat=1 :$participant->etat=0;
+            $participant->tel=$request->input(tel);
+            $participant->save();
             \DB::commit(); 
-        return redirect("/participant_liste")->with('success','Le formulaire a ete modifie avec succes!');;
+        return redirect("/participant_liste");
 
         } catch (\Throwable $th) {
             //throw $th;

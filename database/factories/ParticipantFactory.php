@@ -21,7 +21,7 @@ class ParticipantFactory extends Factory
             "nom" => $this->faker->name(),
             "num_cni" =>Str::random(10),
             "age" => rand(21,100),
-            "id_region" => rand(1,20),
+            "id_region" => rand(1,10),
             "login" => Str::random(10),
             "pwd" => Str::random(15),
             "email" =>$this->faker->email(),

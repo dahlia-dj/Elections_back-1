@@ -99,4 +99,7 @@ class VoteController extends Controller
             return response()->json("{'error: Imposible de supprimé le vote'}", 404);
         }
     }
+
+    public function Resultat($id){
+    }
 }

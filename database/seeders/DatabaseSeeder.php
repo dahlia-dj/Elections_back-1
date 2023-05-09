@@ -19,11 +19,11 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         //appelle la faction factory et genere 20 fois les objets de region
-        Region::factory(20)->create();
-        Participant::factory(20)->create();
-        Election::factory(20)->create();
-        Bulletin::factory(20)->create();
-        Vote::factory(20)->create();
+        Region::factory(10)->create();
+        Participant::factory(200)->create();
+        Election::factory(1)->create();
+        Bulletin::factory(5)->create();
+        Vote::factory(195)->create();
 
 
         // \App\Models\User::factory()->create([
